@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scrabble Duel</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 2rem;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      margin-top: 1rem;
+    }
+
+    .logo {
+      width: 200px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #219150;
+    }
+
+    .result {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #2c3e50;
+    }
+
+    .scoreboard {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/86/Scrabble_logo.svg/320px-Scrabble_logo.svg.png" alt="Scrabble Logo" />
+  <div class="container">
+    <h1>Scrabble Duel</h1>
+    <input type="text" id="player1" placeholder="Player 1's word" />
+    <input type="text" id="player2" placeholder="Player 2's word" />
+    <button onclick="calculateWinner()">Find Winner</button>
+    <div class="scoreboard" id="scoreboard"></div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <footer>Made with ❤️ for CS50-inspired projects</footer>
+
+  <script>
+    const POINTS = {
+      A: 1, B: 3, C: 3, D: 2, E: 1, F: 4, G: 2, H: 4,
+      I: 1, J: 8, K: 5, L: 1, M: 3, N: 1, O: 1, P: 3,
+      Q: 10, R: 1, S: 1, T: 1, U: 1, V: 4, W: 4, X: 8,
+      Y: 4, Z: 10
+    };
+
+    function calculateScore(word) {
+      let score = 0;
+      for (let letter of word.toUpperCase()) {
+        score += POINTS[letter] || 0;
+      }
+      return score;
+    }
+
+    function calculateWinner() {
+      const word1 = document.getElementById("player1").value;
+      const word2 = document.getElementById("player2").value;
+
+      const score1 = calculateScore(word1);
+      const score2 = calculateScore(word2);
+
+      const scoreboard = document.getElementById("scoreboard");
+      scoreboard.innerHTML = `Player 1: ${score1} | Player 2: ${score2}`;
+
+      const result = document.getElementById("result");
+
+      if (!word1 && !word2) {
+        result.innerText = "Please enter both words.";
+      } else if (score1 > score2) {
+        result.innerText = "🎉 Player 1 wins!";
+      } else if (score2 > score1) {
+        result.innerText = "🎉 Player 2 wins!";
+      } else if (score1 === score2 && score1 > 0) {
+        result.innerText = "🤝 It's a tie!";
+      } else {
+        result.innerText = "Enter valid words to play.";
+      }
+    }
+  </script>
+</body>
+</html>
