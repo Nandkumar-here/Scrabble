@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scrabble Score Calculator</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
+  input, button { width: 100%; margin: 0.5rem 0; padding: 0.5rem; font-size: 1rem; }
+</style>
+</head>
+<body>
+  <h1>Scrabble Score Calculator</h1>
+  <input type="text" id="wordInput" placeholder="Enter a word" />
+  <button id="calcBtn">Calculate Score</button>
+  <h3>Score:</h3>
+  <div id="scoreOutput"></div>
+
+  <script>
+    const scores = {
+      A:1, B:3, C:3, D:2, E:1, F:4, G:2, H:4, I:1, J:8,
+      K:5, L:1, M:3, N:1, O:1, P:3, Q:10, R:1, S:1, T:1,
+      U:1, V:4, W:4, X:8, Y:4, Z:10
+    };
+
+    document.getElementById('calcBtn').onclick = () => {
+      const word = document.getElementById('wordInput').value.toUpperCase().trim();
+      if (!word.match(/^[A-Z]+$/)) {
+        alert('Please enter a valid word with only letters.');
+        return;
+      }
+      let score = 0;
+      for (let char of word) {
+        score += scores[char] || 0;
+      }
+      document.getElementById('scoreOutput').textContent = score;
+    };
+  </script>
+</body>
+</html>
